@@ -1,21 +1,18 @@
 const pool = require('../database/config/db');
 
 class Products {
-
-    constructor(barcode, product_name, cost) {
-        this.barcode = barcode;
-        this.product_name = product_name;
-        this.cost = cost;
-    }
-    constructor(barcode){
-        this.barcode = barcode;
+    constructor(id) {
+        this.id = id;
     }
 
-    async addProduct(){
-        await pool.execute(`INSERT INTO all_products(Product_ID, Product_Name, Cost) VALUES('${this.barcode}','${this.product_name}','${this.cost}',)`)
-    } 
+    static async addProduct(id, name, cost) {
+        await pool.execute(`INSERT INTO all_products (Product_ID, Product_Name, Cost, Sl_No)
+                            VALUES
+                            (${id},'${name}',${cost},null);`);
+    }
+
     static async addMultipleProducts(arr) {
-        arr.forEach(async({ Product_ID, Product_Name, Cost}) => {
+        arr.forEach(async ({ Product_ID, Product_Name, Cost }) => {
             await pool.execute(
                 `INSERT INTO all_products (Product_ID, Product_Name, Cost, Sl_No)
                 VALUES
@@ -24,13 +21,18 @@ class Products {
         });
     }
 
-    async getProducts() {
+    static async getProduct(id) {
+        const [data, _] = await pool.execute(`SELECT * FROM all_products WHERE Product_ID=${id}`);
+        return data;
+    }
+
+    static async getProducts() {
         const [data, _] = await pool.execute('SELECT * FROM all_products');
         return data;
     }
 
-    async deleteProduct() {
-        await pool.execute(`DELETE FROM all_products WHERE Product_ID = ${this.barcode}`);
+    static async deleteProducts() {
+        await pool.execute(`DELETE FROM all_products`);
     }
 }
 

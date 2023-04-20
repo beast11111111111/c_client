@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+
+const server_url = process.env.REACT_APP_SERVER_URL || 'http://localhost:5000';
 
 const msgColors = {
     success: 'text-green-500',
@@ -9,12 +11,13 @@ const msgColors = {
 }
 
 const setLocalStorage = (data) => {
-    for (const key in data) {
+    for(const key in data) {
         window.localStorage.setItem(key, data[key]);
     }
 }
 
 export default function LoginForm() {
+
     const [contact, setContact] = useState('');
     const [password, setPassword] = useState('');
     const [disabled, setDisabled] = useState(false);
@@ -25,10 +28,10 @@ export default function LoginForm() {
         e.preventDefault();
         setDisabled(true);
         setMessage('loading...');
-        console.log(process.env.REACT_APP_SERVER_URL);
+
         try {
-            const data = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/signin`, { contact, password });
-            if (data.status === 200) {
+            const data = await axios.post(server_url + '/api/signin',{ contact, password });
+            if(data.status === 200) {
                 setMsgColor(msgColors.success);
                 setMessage(data.data.data);
                 setLocalStorage(data.data.userInfo);
@@ -37,10 +40,10 @@ export default function LoginForm() {
                 setTimeout(() => {
                     setMessage('');
                     setDisabled(false);
-                    window.location = '/landingpage';
+                    window.location = '/landingPage';
                 }, 1000);
             }
-        } catch (err) {
+        } catch(err) {
             setMsgColor(msgColors.error);
             setMessage(err.response.data.data);
             setTimeout(() => {
@@ -48,13 +51,13 @@ export default function LoginForm() {
                 setMessage('');
             }, 2000);
         }
-
+        
     }
-
+    
     return (
         <>
-            <div className='bg-slate-200 w-full h-screen flex justify-center'>
-                <div className='bg-slate-400 rounded-lg p-12 w-full sm:w-1/2 sm:my-12 md:max-w-[500px]'>
+            <div className='w-full h-screen flex justify-center'>
+                <div className='border rounded p-12 w-full sm:w-1/2 sm:my-12 md:max-w-[500px]'>
                     <div className='text-xl font-bold'>Login Form</div>
                     <form className='flex flex-col justify-center h-full' onSubmit={(e) => sendValues(e)}>
                         <div className='mb-6 mt-4'>
@@ -66,7 +69,7 @@ export default function LoginForm() {
                             <input type='password' value={password} onChange={e => setPassword(e.target.value)} id='password' className='shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light' required />
                         </div>
                         <div className={`text-sm ${msgcolor}`}>{message}</div>
-                        <button type='submit' className={`${disabled && 'cursor-not-allowed'} text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mt-8`}>Register new account</button>
+                        <button type='submit' className={`${disabled && 'cursor-not-allowed'} text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mt-8`}>Login</button>
                         <div className='mt-6 text-sm'>don't have an account <Link to={'/register'} className='underline text-blue-500'>register</Link></div>
                     </form>
                 </div>
@@ -75,4 +78,3 @@ export default function LoginForm() {
         </>
     )
 }
-    

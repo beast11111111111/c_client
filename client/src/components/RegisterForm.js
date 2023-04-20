@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
+const server_url = process.env.REACT_APP_SERVER_URL || 'http://localhost:5000';
+
 const msgColors = {
     success: 'text-green-400',
     info: 'text-blue-400',
@@ -23,6 +25,7 @@ export default function RegisterForm() {
     const [disabled, setDisabled] = useState(false);
     const [message, setMessage] = useState('');
     const [msgcolor, setMsgColor] = useState('');
+    const [adminKey, setAdminKey] = useState('');
 
     const sendValues = async (e) => {
         e.preventDefault();
@@ -30,7 +33,7 @@ export default function RegisterForm() {
         setMessage('loading...');
 
         try {
-            const data = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/signup`,{ contact, password, email, username});
+            const data = await axios.post(server_url + '/api/signup',{ contact, password, email, username, adminKey});
             if(data.status === 201) {
                 setMsgColor(msgColors.success);
                 setMessage(data.data.data);
@@ -42,7 +45,7 @@ export default function RegisterForm() {
                 setTimeout(() => {
                     setMessage('');
                     setDisabled(false);
-                    window.location = '/landingpage';
+                    window.location = '/cart';
                 }, 1000);
             }
         } catch(err) {
@@ -53,7 +56,6 @@ export default function RegisterForm() {
                 setMessage('');
             }, 2000);
         }
-        
     }
     
     return (
@@ -77,6 +79,10 @@ export default function RegisterForm() {
                         <div className='mb-6 mt-4'>
                             <label htmlFor='password' className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'>Your password</label>
                             <input type='password' value={password} onChange={e => setPassword(e.target.value)} id='' className='shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light' required />
+                        </div>
+                         <div className='mb-6 mt-4'>
+                            <label htmlFor='password' className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'>key for Admin privileges</label>
+                            <input type='password' value={adminKey} onChange={e => setAdminKey(e.target.value)} id='' className='shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light' />
                         </div>
                         <div className={`text-sm ${msgcolor}`}>{message}</div>
                         <button type='submit' className={`${disabled && 'cursor-not-allowed'} text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mt-8`}>Register new account</button>
