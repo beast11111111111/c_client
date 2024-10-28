@@ -30,7 +30,7 @@ export default function LoginForm() {
         setMessage('loading...');
 
         try {
-            const data = await axios.post(server_url + '/api/signin',{ contact, password });
+            const data = await axios.post(server_url + '/api/signin',{ contact, password },{withCredentials:true});
             if(data.status === 200) {
                 setMsgColor(msgColors.success);
                 setMessage(data.data.data);

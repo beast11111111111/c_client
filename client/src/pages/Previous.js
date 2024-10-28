@@ -11,7 +11,7 @@ export default function Previouscomponent() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    axios.get(server_url + '/api/getProducts')
+    axios.get(server_url + '/api/getProducts',{withCredentials:true})
       .then(res => setData(res.data.data.bill_of_all.sort((a, b) => b.transaction_id - a.transaction_id)));
   }, []);
 
