@@ -3,10 +3,10 @@ import { useEffect, useState } from "react"
 import axios from 'axios'
 
 export default function QRScannerComponent({ socket }) {
-
   const [ShowQRReader, setShowQRReader] = useState();
 
   useEffect(() => {
+    const state = localStorage.getItem('cart_id') ? true : false;
     const html5QrCode = new Html5Qrcode("reader");
 
     const qrCodeSuccessCallback = (decodedText, decodedResult) => {
@@ -20,10 +20,11 @@ export default function QRScannerComponent({ socket }) {
       if (cart_id !== null || cart_id !== undefined) {
         socket.emit('join-cart', { contact, cart_id });
         setShowQRReader(true);
+        localStorage.setItem('cart_id',cart_id); 
       }
     };
 
-    if (!ShowQRReader) {
+    if (!state) {
       const config = { fps: 30, qrbox: { width: 150, height: 150 } };
       html5QrCode.start({ facingMode: "environment" }, config, qrCodeSuccessCallback);
     }
