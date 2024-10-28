@@ -17,9 +17,10 @@ CREATE TABLE all_products (
 )
 
 CREATE TABLE customers (
-    Contact_Number INT NOT NULL,
+    Contact_Number VARCHAR(50) NOT NULL,
     Customer_Name VARCHAR(50) NOT NULL,
     Email VARCHAR(50) NOT NULL,
     Password VARCHAR(255) NOT NULL,
-    Sl_No INT PRIMARY KEY AUTO_INCREMENT
+    Sl_No INT PRIMARY KEY AUTO_INCREMENT,
+    Role  VARCHAR(50) NOT NULL
 );

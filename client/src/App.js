@@ -14,7 +14,7 @@ function App() {
   const theme = useTheme().theme.button
   return (
     <>
-    <div className={`${theme.color.light}`}>
+    {/* <div className={`${theme.color.light}`}> */}
       <Flowbite className={`min-h-full`}>
         <BrowserRouter>
           <Routes>
@@ -29,7 +29,7 @@ function App() {
           </Routes>
         </BrowserRouter>
       </Flowbite>
-      </div>
+      {/* </div> */}
     </>
   );
 }

@@ -70,7 +70,6 @@ export default function Cart() {
             <div className={alertMessage ? `fixed bottom-1/4 left-1/2 -translate-x-1/2 z-50 p-4 mb-4 text-sm text-blue-800 w-3/4 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400`: `hidden`} role="alert">
                 <span className={alertColor}>{alertStatus+'! '}</span>{'message: '+alertMessage}
             </div>
-            <DarkThemeToggle className="sticky top-[90vh]"></DarkThemeToggle>
             <div className="h-full relative w-full color.blue m-auto">
                 <div className="w-[90%] m-auto">
                     {billItems.status === 'success'

@@ -56,21 +56,21 @@ export default function LoginForm() {
     
     return (
         <>
-            <div className='w-full h-screen flex justify-center'>
-                <div className='border rounded p-12 w-full sm:w-1/2 sm:my-12 md:max-w-[500px]'>
-                    <div className='text-xl font-bold'>Login Form</div>
+            <div className='w-full h-screen flex justify-center bg-black'>
+                <div className='border rounded p-12 w-full sm:w-1/2 sm:my-12 md:max-w-[500px] bg-white bg-opacity-20 backdrop-blur-lg'>
+                    <div className='text-xl font-bold italic text-blue-500 text-center'>Login/Signup</div>
                     <form className='flex flex-col justify-center h-full' onSubmit={(e) => sendValues(e)}>
                         <div className='mb-6 mt-4'>
-                            <label htmlFor='phone' className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'>Your phone number</label>
+                            <label htmlFor='phone' className='block mb-2 text-sm font-medium text-blue-500 italic'>Enter your Number</label>
                             <input type='tel' value={contact} onChange={e => setContact(e.target.value)} id='phone' className='shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light' required />
                         </div>
                         <div className='mb-6 mt-4'>
-                            <label htmlFor='password' className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'>Your password</label>
+                        <label htmlFor='password' className='block mb-2 text-sm font-medium text-blue-500 italic'>Enter your password</label>
                             <input type='password' value={password} onChange={e => setPassword(e.target.value)} id='password' className='shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light' required />
                         </div>
                         <div className={`text-sm ${msgcolor}`}>{message}</div>
                         <button type='submit' className={`${disabled && 'cursor-not-allowed'} text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mt-8`}>Login</button>
-                        <div className='mt-6 text-sm'>don't have an account <Link to={'/register'} className='underline text-blue-500'>register</Link></div>
+                        <div className='mt-6 text-sm'> <Link to={'/register'} className='underline text-blue-500'>Click to register</Link></div>
                     </form>
                 </div>
             </div>
